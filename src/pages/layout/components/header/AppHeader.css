@@ -1,0 +1,12 @@
+.header{
+    position:relative;
+    right: auto;
+    background-color: #001529;
+    height: 140px; 
+    color: white;
+    font-family: 'Libre Baskerville', serif;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    
+}

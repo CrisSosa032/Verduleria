@@ -1,0 +1,30 @@
+.container{
+    width: 85%;
+    margin-left: 12%;
+    margin-right: 3%;
+    margin-top: 30px;
+    margin-bottom: 30px;
+ }
+
+.frutas{
+   display: grid;
+   grid-template-columns: 1fr 1fr 1fr;
+   gap: 30px;
+   width: 100%;
+   margin-bottom: 40px;
+   margin-top: 20px;
+}
+
+.fruta{
+   text-align: center;
+   padding:3rem 2rem;
+   background: #fff;
+   box-shadow: 0 .5rem 1rem rgba(0,0,0,.1);
+   outline: .1rem solid #ccc;
+   outline-offset: -1.5rem;
+}
+
+.fruta:hover{
+    outline: .2rem solid #222;
+    outline-offset: 0;
+ }

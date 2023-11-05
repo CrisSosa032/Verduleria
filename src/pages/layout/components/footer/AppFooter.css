@@ -1,0 +1,6 @@
+.app-Layout-background{
+    color: white;
+    display: flex;
+    flex-direction: column;
+    background-color: #001529;
+}
