@@ -14,7 +14,7 @@ import UpdateVerduras from '../../../domain/update/UpdateVerduras'
 import UpdateFrutas from '../../../domain/update/UpdateFrutas'
 import UpdateHortalizas from '../../../domain/update/UpdateHortalizas'
 import UpdatePollo from '../../../domain/update/UpdatePollo'
-import {HomeOutlined, DatabaseOutlined, GlobalOutlined, DollarCircleOutlined,ShopOutlined} from "@ant-design/icons"
+import {HomeOutlined, GlobalOutlined, DollarCircleOutlined,ShopOutlined} from "@ant-design/icons"
 
 const routes = [
   { key: 'home', role: 'admin', label: 'Inicio',
@@ -69,11 +69,11 @@ const routes = [
 { key: 'update', role: 'admin', label: 'Actualizar',
 path: "/update/:id", menu: true, icon: <ShopOutlined />, 
 children: [
-  { key: 'updateVerduras', role: 'admin', label: 'Actualizar Verduras',
-    path: '/updateverduras/:id', icon: <GlobalOutlined />, element: <UpdateVerduras />
-  },
   { key: 'updateFrutas', role: 'admin', label: 'Actualizar Frutas',
     path: '/updatefrutas', icon: <GlobalOutlined />, element: <UpdateFrutas />
+  },
+  { key: 'updateVerduras', role: 'admin', label: 'Actualizar Verduras',
+    path: '/updateverduras', icon: <GlobalOutlined />, element: <UpdateVerduras />
   },
   { key: 'updateHortalizas', role: 'admin', label: 'Actualizar Hortalizas',
     path: '/updatehortalizas', icon: <GlobalOutlined />, element: <UpdateHortalizas />

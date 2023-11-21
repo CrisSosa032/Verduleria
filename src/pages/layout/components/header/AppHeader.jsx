@@ -1,8 +1,10 @@
 import { React, useState } from 'react'
+import { Component } from 'react'
 import './AppHeader.css'
 import logo from './assets/logo.png'
 import usuario from './assets/usuario.png'
 import './AppHeader.css'
+import Carro from './Carro'
 
 
 const styles= {
@@ -19,21 +21,39 @@ const styles= {
   },
   botonIngresar:{
     borderRadius: '10px',
-    marginRight: '200px',
+    
+  },
+  disp: {
+    display: 'flex',
+    justifyContent: 'space-around'
+    
+
+  },
+  logo: {
+    display: 'flex'
+
   }
 }
 
-function AppHeader() {
 
-  return (
-    <div className='header'>
-            <button style={styles.botonIngresar}><img style={styles.ingresar} src={usuario} alt="" />ingresar</button>
+class AppHeader extends Component {
+  render() {
+      const { carro, esCarroVisible, mostrarCarro } = this.props
+      return(
+        <div style={styles.disp} className='header'>
+          <button style={styles.botonIngresar}><img style={styles.ingresar} src={usuario} alt="" />ingresar</button>
+          <div style={styles.logo}>
             <img style={styles.img} src={logo} alt="logo" className="logoImg" />
-            <br />
             <h1 style={styles.texto}>CHANGARINES - VERDULERIA - POLLERIA</h1>
-            
-    </div>
-  )
+          </div>
+            <Carro  
+              carro={carro} 
+              esCarroVisible={esCarroVisible} 
+              mostrarCarro={mostrarCarro}
+            />
+        </div>
+      )
+  }
 }
 
 export default AppHeader

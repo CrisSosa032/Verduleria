@@ -437,3 +437,97 @@ app.post("clientes", (req,res) =>{
 app.listen(8800, () =>{
     console.log("Conectado al backend!")
 })
+
+//PEDIDOS AL BACK DEL CARRITO
+
+app.get('/carrito', (req, res) => {
+  db.query('SELECT * FROM carrito', (error, results) => {
+    if (error) {
+      console.error(error);
+      res.status(500).json({ error: 'Error al obtener los datos del carro' });
+    } else {
+      const carritosConImagenes = results.map((carrito) => {
+        return {
+          id: carrito.id,
+          nombre: carrito.nombre,
+          descripcion: carrito.descripcion,
+          precio: carrito.precio,
+          foto: `http://localhost:8800/${carrito.foto}`,
+          cantidad: carrito.cantidad,
+        };
+      });
+      res.json(carritosConImagenes);
+    }
+  });
+});
+
+
+
+app.post('/carrito', upload.single('foto'), (req, res) => {
+  const imagenPath = req.file.path;
+  const { nombre, descripcion, precio, cantidad } = req.body;
+
+  const nombreArchivo = path.basename(imagenPath);
+
+  // Aquí puedes realizar alguna operación con los datos recibidos, como guardarlos en la base de datos
+  const verduras = {
+    nombre,
+    descripcion,
+    precio: parseInt(precio),
+    foto: nombreArchivo,
+    cantidad,
+  };
+
+  db.query('INSERT INTO carrito SET ?', carrito, (error, result) => {
+    if (error) {
+      console.error('Error al insertar los datos:', error);
+      res.status(500).json({ error: 'Error al insertar los datos en la base de datos.' });
+    } else {
+      console.log('Datos insertados exitosamente.');
+      res.json({ message: 'Datos insertados exitosamente.' });
+    }
+  });
+});
+
+
+app.delete("/carrito/:id", (req, res)=>{
+  const carritoId = req.params.id;
+  const q = "DELETE FROM carrito WHERE id = ?"
+
+  db.query(q,[carritoId],(err,data)=>{
+      if(err) return res.json(err)
+      
+      return res.json("se elimino del carrito")
+  })
+})
+
+
+app.put('/carrito/:id', upload.single('foto'), (req, res) => {
+const carritoId = req.params.id;
+const { nombre, descripcion, precio, cantidad } = req.body;
+const imagenPath = req.file ? req.file.path : null;
+
+const nombreArchivo = path.basename(imagenPath);
+
+const updatedCarrito = {
+  nombre,
+  descripcion,
+  precio,
+  cantidad
+};
+
+if (imagenPath) {
+  updatedCarrito.foto = nombreArchivo;
+}
+
+db.query('UPDATE carrito SET ? WHERE id = ?', [updatedCarrito, carritoId], (error, result) => {
+  if (error) {
+    console.error('Error al actualizar los datos:', error);
+    res.status(500).json({ error: 'Error al actualizar los datos en la base de datos.' });
+  } else {
+    console.log('Datos actualizados exitosamente.');
+    res.json({ message: 'Datos actualizados exitosamente.' });
+  }
+});
+});
+

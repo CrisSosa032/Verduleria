@@ -1,34 +1,66 @@
-import { Route, Routes } from 'react-router-dom'
-import routes from '../routes/AppRoutes';
+import React from 'react';
+import { Route, Routes } from 'react-router-dom';
+import AppRoutes from '../routes/AppRoutes';
 
+const renderRoutes = (routes) => {
+  return routes.map(route => {
+    if (route.children) {
+      return (
+        <Route
+          key={route.key}
+          path={route.path}
+          element={
+            <Route
+              path={route.path}
+              element={route.element}
+            >
+              {renderRoutes(route.children)}
+            </Route>
+          }
+        />
+      );
+    } else {
+      return (
+        <Route
+          key={route.key}
+          path={route.path}
+          element={route.element}
+        />
+      );
+    }
+  });
+};
 
-const AppContentRoutes = () => {
-
-  let arrayRoute = []
-  let path = ''
+const AppContentRoutes = ({ agregarAlCarro}) => {
+  let arrayRoute = [];
+  let path = '';
 
   const getRoute = route => {
     if (route.children) {
       route.children.forEach(routeSubmenu => {
-        getRoute(routeSubmenu)
-      })
+        getRoute(routeSubmenu);
+      });
     } else {
-      let url = route.path
+      let url = route.path;
       if (!route.menu) {
-        url = path + route.path + '/*'
+        url = path + route.path + '/*';
       }
-      console.log("ROUTE: ", route)
       arrayRoute.push({
-        key: route.key, role: route.role,
-        path: url, element: route.element
-      })
+        key: route.key,
+        role: route.role,
+        path: url,
+        element: React.cloneElement(route.element, { agregarAlCarro}),
+      });
     }
-  }
-  routes.forEach(route => getRoute(route))
+  };
 
-  return <Routes>
-    {arrayRoute.map(route => <Route key={route.key} path={route.path} element={route.element} />)}
-  </Routes>
-}
+  AppRoutes.forEach(route => getRoute(route));
 
-export default AppContentRoutes
+  return (
+    <Routes agregarAlCarro={agregarAlCarro}>
+      {renderRoutes(arrayRoute)}
+    </Routes>
+  );
+};
+
+export default AppContentRoutes;

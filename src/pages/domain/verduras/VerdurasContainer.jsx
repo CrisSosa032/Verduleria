@@ -30,7 +30,7 @@ const styles = {
   }
 }
 
-const VerdurasContainer = () => {
+const VerdurasContainer = ({agregarAlCarro}) => {
   const [verduras, setVerduras] = useState([])
 
   useEffect (()=>{
@@ -70,8 +70,9 @@ const VerdurasContainer = () => {
             <p>{verdura.descripcion}</p>
             <span>{verdura.precio}</span>
             <br /> <br />
-            <button style={styles.borrar} className='borrar' onClick={()=>handleDelete(verdura.id)}>Delete</button>
-            <button style={styles.actualizar} className='actualizar'><Link to={`/updateverduras/${verdura.id}`}>Actualizar</Link></button>
+            <button style={styles.borrar} className='borrar' onClick={()=>handleDelete(verdura.id)}>BORRAR</button>
+            <button style={styles.actualizar} className='actualizar'><Link to={`/updateverduras/${verdura.id}`}>ACTUALIZAR</Link></button>
+            <button style={styles.agregar} className='agregar' onClick={() => agregarAlCarro(verdura)}>AGREGAR AL CARRITO</button>
 
           </div>
         ))}

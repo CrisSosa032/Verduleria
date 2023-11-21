@@ -1,4 +1,4 @@
-import React from 'react'
+// import React from 'react'
 import { useEffect } from 'react'
 import { useState } from 'react'
 import  axios  from 'axios'
@@ -32,7 +32,7 @@ const styles = {
 
 
 
-const FrutasContainer = () => {
+const FrutasContainer = ({agregarAlCarro}) => {
   const [frutas, setFrutas] = useState([])
 
   useEffect (()=>{
@@ -74,6 +74,7 @@ const FrutasContainer = () => {
             <br /> <br />
             <button style={styles.borrar} className='borrar' onClick={()=>handleDelete(fruta.id)}>BORRAR</button>
             <button style={styles.actualizar} className='actualizar'><Link to={`/updatefrutas/${fruta.id}`}>ACTUALIZAR</Link></button>
+            <button style={styles.agregar} className='agregar' onClick={() => agregarAlCarro(fruta)}>AGREGAR AL CARRITO</button>
 
           </div>
         ))}
